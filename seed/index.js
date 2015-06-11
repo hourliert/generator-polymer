@@ -100,10 +100,16 @@ module.exports = yeoman.generators.Base.extend({
     this.copy('README.md', 'README.md', renameElement);
     this.copy('seed-element.html', this.elementName + '.html', renameElement);
     this.copy('demo/index.html', 'demo/index.html', renameElement);
+    this.copy('.jscsrc', '.jscsrc');
+    this.copy('.travis.yml', '.travis.yml');
+    this.copy('gulpfile.js','gulpfile.js');
+    this.copy('hero.svg','hero.svg');
+    this.copy('package.json','package.json');
 
     if (this.includeWCT) {
       this.copy('test/index.html', 'test/index.html', renameElement);
       this.copy('test/basic-test.html', 'test/basic-test.html', renameElement);
+      this.copy('wct.conf.js','wct.conf.js');
     }
   },
   install: function () {
