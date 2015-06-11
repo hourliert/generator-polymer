@@ -102,9 +102,9 @@ module.exports = yeoman.generators.Base.extend({
     this.copy('demo/index.html', 'demo/index.html', renameElement);
     this.copy('.jscsrc', '.jscsrc');
     this.copy('.travis.yml', '.travis.yml');
-    this.copy('gulpfile.js','gulpfile.js');
+    this.copy('gulpfile.js','gulpfile.js', renameElement);
     this.copy('hero.svg','hero.svg');
-    this.copy('package.json','package.json');
+    this.copy('package.json','package.json', renameElement);
 
     if (this.includeWCT) {
       this.copy('test/index.html', 'test/index.html', renameElement);
