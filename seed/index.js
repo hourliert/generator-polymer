@@ -74,7 +74,7 @@ module.exports = yeoman.generators.Base.extend({
   seed: function () {
 
     var renameElement = function (file) {
-      return file.replace(/seed-element/g, this.elementName);
+      return file.replace(/seed-element/g, this.elementName).replace(/SeedElement/g, this.elementName);
     }.bind(this);
 
     // Handle bug where npm has renamed .gitignore to .npmignore
@@ -99,8 +99,11 @@ module.exports = yeoman.generators.Base.extend({
     this.copy('index.html', 'index.html', renameElement);
     this.copy('README.md', 'README.md', renameElement);
     this.copy('seed-element.html', this.elementName + '.html', renameElement);
+    this.copy('seed-element.ts', this.elementName + '.ts', renameElement);
     this.copy('demo/index.html', 'demo/index.html', renameElement);
     this.copy('.jscsrc', '.jscsrc');
+    this.copy('all.d.ts', 'all.d.ts');
+    this.copy('tsconfig.json', 'tsconfig.json');
     this.copy('.travis.yml', '.travis.yml');
     this.copy('gulpfile.js','gulpfile.js', renameElement);
     this.copy('hero.svg','hero.svg');

@@ -1,11 +1,15 @@
-var gulp = require('gulp'),
-	bs = require('browser-sync').create(),
-	bg = require("gulp-bg"),
-	ps = require('ps-node'),
-  git = require('gulp-git'),
-  bump = require('gulp-bump'),
+var gulp      = require('gulp'),
+  bs          = require('browser-sync').create(),
+  bg          = require("gulp-bg"),
+  ps          = require('ps-node'),
+  git         = require('gulp-git'),
+  bump        = require('gulp-bump'),
   tag_version = require('gulp-tag-version'),
-  filter = require('gulp-filter');
+  filter      = require('gulp-filter'),
+  ts          = require('gulp-typescript'),
+  sourcemaps  = require('gulp-sourcemaps');
+
+var tsProject = ts.createProject('tsconfig.json', { sortOutput: true });
 
 var POLYSERVE_PORT = 8080,
     elementName = 'seed-element';
@@ -23,11 +27,27 @@ var browserSyncConfig = function(path, cb) {
   });
 };
 
+gulp.task('reload', ['typescript'], function () {
+  bs.reload();
+});
+
 var watchComponent = function() {
-  gulp.watch(['./*.html', 'demo/**/*.html', 'test/**/*.html'], bs.reload);
+  gulp.watch(['./*.html', './*.ts', 'demo/**/*.html', 'test/**/*.html'], ['reload']);
 };
 
-gulp.task('polyserve', function(cb) {
+gulp.task('typescript', function() {
+  var tsResult = gulp.src([
+      '*.ts'
+    ])
+      .pipe(sourcemaps.init())
+      .pipe(ts(tsProject));
+
+  return tsResult.js
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('.'));
+});
+
+gulp.task('polyserve', ['typescript'], function(cb) {
   ps.lookup({
     command: 'polyserve',
     psargs: '-f'
