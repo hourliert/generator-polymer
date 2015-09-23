@@ -128,10 +128,39 @@ module.exports = yeoman.generators.Base.extend({
       );
     }
 
+    this.copy('bower.json', 'bower.json', function(file) {
+      var manifest = JSON.parse(file);
+      manifest.name = this.elementName;
+      manifest.main = this.elementName + '.html';
+      if (!this.includeWCT) {
+        delete manifest.devDependencies['web-component-tester'];
+        delete manifest.devDependencies['test-fixture'];
+      }
+      return JSON.stringify(manifest, null, 2);
+    }.bind(this));
+
+    this.copy('index.html', 'index.html', renameElement);
+    this.copy('README.md', 'README.md', renameElement);
+    this.copy('seed-element.html', this.elementName + '.html', renameElement);
+    this.copy('seed-element.js', this.elementName + '.js', renameElement);
+    this.copy('src/seed-element.html', 'src/' + this.elementName + '.html', renameElement);
+    this.copy('demo/index.html', 'demo/index.html', renameElement);
+    this.copy('.jscsrc', '.jscsrc', renameElement);
+    this.copy('.jshintrc', '.jshintrc', renameElement);
+    this.copy('.travis.yml', '.travis.yml');
+    this.copy('gulpfile.js','gulpfile.js', renameElement);
+    this.copy('hero.svg','hero.svg');
+    this.copy('package.json','package.json', renameElement);
+
+    if (this.includeWCT) {
+      this.copy('test/index.html', 'test/index.html', renameElement);
+      this.copy('test/basic-test.html', 'test/basic-test.html', renameElement);
+      this.copy('wct.conf.js','wct.conf.js', renameElement);
+    }
+
   },
   install: function () {
     this.installDependencies({
-      npm: false,
       skipInstall: this.options['skip-install'],
       skipMessage: this.options['skip-install-message']
     });
