@@ -1,6 +1,6 @@
 [submodule "app/templates/polymer-starter-kit"]
 	path = app/templates/polymer-starter-kit
-	url = https://github.com/hourlier/polymer-starter-kit.git
+	url = https://github.com/hourliert/polymer-starter-kit.git
   branch = es6
 [submodule "seed/templates/seed-element"]
 	path = seed/templates/seed-element
