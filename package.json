@@ -1,6 +1,6 @@
 {
   "name": "generator-polymer",
-  "version": "1.2.3",
+  "version": "1.2.5",
   "description": "Scaffold out a Polymer project",
   "keywords": [
     "yeoman-generator",
@@ -13,7 +13,8 @@
   "main": "app/index.js",
   "repository": "yeoman/generator-polymer",
   "scripts": {
-    "test": "jshint {app,el,gh,seed,test}/*.js script-base.js util.js && mocha --reporter spec"
+    "test": "jshint {app,el,gh,seed,test}/*.js script-base.js util.js && mocha --reporter spec",
+    "prepublish": "git submodule update --init --recursive"
   },
   "dependencies": {
     "chalk": "^1.0.0",
